@@ -2,10 +2,17 @@
   "name": "socket-example",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4004",
+  "main": "server/server.js",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "massive": "^5.7.7",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",

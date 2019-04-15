@@ -18,25 +18,52 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+    this.setSocketListeners()
   }
 
   componentWillUnmount() {
     this.socket.disconnect()
   }
 
-  
+  setSocketListeners = () => {
+    this.socket = io()
 
-  joinRoom = () => {
-    
+    this.socket.on('sendMsg', msg => {
+      console.log(msg)
+      let messages = this.state.messages
+      messages.push(msg)
+      this.setState({ messages: messages, message: '' })
+    })
+
+
+  }
+
+  joinRoom = (myId, friendId) => {
+    console.log(myId, friendId)
+    myId = parseInt(myId)
+    friendId = parseInt(friendId)
+    let highUser
+    let lowUser
+    if (myId > friendId) {
+      highUser = myId
+      lowUser = friendId
+    } else {
+      highUser = friendId
+      lowUser = myId
+    }
+    const roomId = highUser + ':' + lowUser
+    console.log(roomId)
+    this.setState({ room: roomId })
+    this.socket.emit('joinRoom', roomId)
   }
 
 
   sendMessage = () => {
-
+    this.socket.emit('sendMsg', { room: this.state.room, msg: this.state.message, user: this.state.user })
   }
 
   render() {
+    console.log(this.state.messages)
     const mappedMessages = this.state.messages.map((message, i) => {
       return (
         <div key={i}>
@@ -45,6 +72,7 @@ class App extends Component {
         </div>
       )
     })
+    console.log(this.state)
     return (
       <div className="App">
         <h1>Learn Socket.IO</h1>
@@ -61,7 +89,7 @@ class App extends Component {
           value={this.state.room}
           onChange={(e) => this.setState({ room: e.target.value })} />
 
-        {/* <p>What is your ID?</p>
+        <p>What is your ID?</p>
        
         <button onClick={this.joinRoom}>Join Room</button>
 
@@ -78,7 +106,7 @@ class App extends Component {
           value={this.state.friendId}
           onChange={(e) => this.setState({ friendId: e.target.value })} />
 
-        <button onClick={() => this.joinRoom(this.state.userId, this.state.friendId)}>Join Room</button> */}
+        <button onClick={() => this.joinRoom(this.state.userId, this.state.friendId)}>Join Room</button>
 
 
         <h5>You are in room {this.state.room}</h5>

@@ -1,5 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+npm i socket.io-client socket.io express body-parser
+
 ## Available Scripts
 
 In the project directory, you can run:
