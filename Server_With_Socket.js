@@ -31,9 +31,9 @@ io.on('connection', function(socket){
   
     socket.on('sendMsg', function(data){
         console.log(data)
-        let messages = data
-        console.log(messages)
-      io.to(data.room).emit('sendMsg', messages)
+        let message = data
+        console.log(message)
+      io.to(data.room).emit('sendMsg', message)
     })
 
 })
