@@ -31,10 +31,11 @@ io.on('connection', function(socket){
 
   socket.on('sendMsg', async (data)=> {
     console.log(data)
-    const { room, msg, user } = data
-    const db = app.get('db')
-    await db.chat.create_message({ room: room, message: msg, user_name: user })
-    let messages = await db.chat.get_message_history({ room: room })
+    let messages = data
+    // const { room, msg, user } = data
+    // const db = app.get('db')
+    // await db.chat.create_message({ room: room, message: msg, user_name: user })
+    // let messages = await db.chat.get_message_history({ room: room })
   io.to(data.room).emit('sendMsg', messages)
 })
   
